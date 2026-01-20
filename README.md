@@ -1,12 +1,89 @@
-🌐 Job Management System (Microservices)A scalable, distributed job management system built with Spring Boot Microservices. This project demonstrates the transition from a monolithic architecture to a decoupled system, utilizing modern DevOps tools like Docker, Zipkin, and PostgreSQL.🏗️ System ArchitectureThe system is composed of three core microservices that communicate synchronously to provide a unified data view:Job Microservice (8082): Manages job postings, salaries, and locations.Company Microservice (8081): Handles organizational data and profiles.Review Microservice (8083): Manages user feedback and ratings for specific companies.🛠️ Key Technical Implementations1. Inter-Service CommunicationSynchronous Communication: Services interact using RestTemplate and the DTO (Data Transfer Object) Pattern.Unified Responses: When a Job is requested, the JobMS fetches related data from CompanyMS and ReviewMS to return a complete response.2. Service Discovery & RegistryEureka Server: Acts as a service registry where all microservices register themselves, allowing them to communicate via service names rather than hardcoded IP addresses.3. Distributed TracingZipkin & Micrometer: Integrated to monitor request flows across the distributed system.Observability: Used to identify latency issues and troubleshoot bottlenecks in the communication between services.4. Persistence & MonitoringPostgreSQL: Each service is configured to use a persistent PostgreSQL database container.Spring Boot Actuator: Enabled to monitor service health, metrics, and application info.🐳 Docker ConfigurationThe system is containerized using Docker and managed via Docker Compose. All services run within a custom network for secure internal communication.Core Ports Mapping:ServiceInternal PortExternal/Host URLCompany MS8081http://localhost:8081Job MS8082http://localhost:8082Review MS8083http://localhost:8083Zipkin9411http://localhost:9411pgAdmin80http://localhost:5050🚀 Getting StartedPrerequisitesDocker Desktop installed.Maven for building JAR files.InstallationPackage the Microservices:Bashmvn clean package -DskipTests
-Spin up the Infrastructure:Bashdocker-compose up -d
-📮 Postman TestingYou can test the APIs by sending requests to the following endpoints. Ensure the Content-Type is set to application/json.Example: Creating a New JobURL: POST http://localhost:8082/jobsBody:JSON{
-    "title": "Software Engineer",
-    "description": "Develop Java Microservices",
-    "minSalary": "5000",
-    "maxSalary": "8000",
-    "location": "Remote",
-    "company": {
-        "id": 1
-    }
-}
+# 🌐 Job Management System – Microservices Architecture
+
+## 🧭 Overview
+The **Job Management System** is a scalable and distributed application built using **Spring Boot Microservices**.  
+This project demonstrates the transition from a **monolithic architecture** to a **decoupled microservices-based system**, focusing on scalability, maintainability, and observability.
+
+The system manages job postings, company data, and user reviews through independent services that collaborate to provide a unified response.
+
+This project was built as part of a practical learning journey to strengthen backend development, microservices architecture, and DevOps skills.
+
+---
+
+## 🏗️ System Architecture
+The system consists of three core microservices that communicate synchronously:
+
+- **Company Microservice (8081)**  
+  Manages company profiles and organizational data.
+
+- **Job Microservice (8082)**  
+  Handles job postings, salary ranges, and job locations.
+
+- **Review Microservice (8083)**  
+  Manages user feedback and company ratings.
+
+Each microservice is independently deployable and owns its own database.
+
+---
+
+## 🛠️ Tools & Technologies
+
+| Category | Tool / Technology | Purpose |
+|--------|------------------|---------|
+| Backend Framework | Spring Boot | Building microservices |
+| Service Discovery | Netflix Eureka | Service registry and discovery |
+| Inter-Service Communication | RestTemplate + DTO Pattern | Synchronous communication |
+| Distributed Tracing | Micrometer & Zipkin | Request flow tracking |
+| Database | PostgreSQL | Persistent data storage |
+| Containerization | Docker & Docker Compose | Application deployment |
+| Monitoring | Spring Boot Actuator | Health checks and metrics |
+| Version Control | Git & GitHub | Source code management |
+
+---
+
+## 🧰 Core Microservices and Responsibilities
+
+| Microservice | Description |
+|-------------|------------|
+| Company Service | Manages company information |
+| Job Service | Manages job postings |
+| Review Service | Manages reviews and ratings |
+
+---
+
+## 🔄 Inter-Service Communication
+- Services communicate synchronously using **RestTemplate**.
+- **DTO Pattern** is used to decouple service contracts.
+- Job Service aggregates data from Company and Review services to return a unified response.
+
+---
+
+## 🧵 Distributed Tracing & Monitoring
+- Integrated **Micrometer** and **Zipkin** for tracing.
+- Tracks requests across multiple services.
+- Helps identify latency issues and communication bottlenecks.
+
+---
+
+## 🐳 Docker Configuration
+The system is fully containerized using Docker and managed via Docker Compose.
+All services run inside a dedicated Docker network.
+
+### Ports Mapping
+
+| Service | Internal Port | External URL |
+|-------|---------------|--------------|
+| Company MS | 8081 | http://localhost:8081 |
+| Job MS | 8082 | http://localhost:8082 |
+| Review MS | 8083 | http://localhost:8083 |
+| Zipkin | 9411 | http://localhost:9411 |
+| pgAdmin | 80 | http://localhost:5050 |
+
+---
+
+## 🚀 How to Run the Project
+
+### Step 1 – Clone the Repository
+```bash
+git clone https://github.com/YourUsername/job-management-microservices.git
+
